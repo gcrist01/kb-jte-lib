@@ -16,7 +16,7 @@ void call() {
           KB_CODEBUILD_SRC_DIR="${env.WORKSPACE}"
           KB_STAGE_NAME="Build"
         }
-        node {
+        node ('cake') {
             echo "config Type is: ${config.getClass().name}"
             def scriptPath = config.KB_SCRIPT_PATH
             def projectPath = config.KB_PROJECT_PATH
