@@ -17,15 +17,12 @@ void call() {
           KB_STAGE_NAME="Build"
         }
         
-        script {
             echo "config Type is: ${config.getClass().name}"
             def scriptPath = config.KB_SCRIPT_PATH
             def projectPath = config.KB_PROJECT_PATH
-
-            //dir("${projectPath}") {
             echo "Use Cake Build on ${projectPath}..."
             
-            def cakeScript = sh(script: "yq '.config.build.cakeScript' ${env.KB_CODEBUILD_SRC_DIR}/${scriptPath}/pipeline.yaml", returnStdout: true).trim()
+            def cakeScript = sh(script: "yq '.config.build.cakeScript' ${env.WORKSPACE}/${scriptPath}/pipeline.yaml", returnStdout: true).trim()
             echo "BUILD_CAKE_SCRIPT config is ${cakeScript}"
             if (cakeScript) {
                 echo "cakeScript configured"
@@ -36,8 +33,7 @@ void call() {
             }
             echo "Calling cake ${cakeScript}"
             sh "dotnet cake ${cakeScript} --nugetconfig ${HOME}/.nuget/NuGet/NuGet.Config --verbosity Verbose"
-            //}
-        }
+
     }
 }
 
