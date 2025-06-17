@@ -1,4 +1,4 @@
-void call(context) {
+void call(Map config) {
     agent {
         label 'cake'
     }
