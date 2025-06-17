@@ -1,9 +1,12 @@
-void call(config) {
+void call(context) {
     agent {
         label 'cake'
     }
     stage('Build') {
-        println config.getClass().name
+        //println config.getClass().name
+        println "dotnet: running ${context.library} library's ${context.step} step"  
+        println "args -> ${context.args}" 
+        echo "Type is: ${config.getClass().name}"
         def scriptPath = config.KB_SCRIPT_PATH
         def projectPath = config.KB_PROJECT_PATH
 
