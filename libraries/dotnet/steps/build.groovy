@@ -1,7 +1,4 @@
 void call() {
-    agent {
-        label 'cake'
-    }
     stage('Build') {
         //println config.getClass().name
         echo "config Type is: ${config.getClass().name}"
@@ -11,6 +8,7 @@ void call() {
         def projectPath = config.KB_PROJECT_PATH
 
         environment {
+            // Jenkins user hacks
             DOTNET_CLI_HOME = "${env.WORKSPACE}/.dotnet"
             DOCKER_CONFIG="/home/jenkins/.docker"
             PATH = "${env.WORKSPACE}/.dotnet/tools:${env.PATH}"
@@ -28,24 +26,21 @@ void call() {
         }
         steps {
             echo "Use Cake Build on ${projectPath}..."
-            dir("${projectPath}") {
-                script {
-                    def cakeScript = sh(script: "yq '.config.build.cakeScript' ${KB_CODEBUILD_SRC_DIR}/${scriptPath}/pipeline.yaml", returnStdout: true).trim()
-                    echo "BUILD_CAKE_SCRIPT config is ${cakeScript}"
-                    if (cakeScript) {
-                        echo "cakeScript configured"
-                    }
-                    else{
-                        // use Template default, yeah I know
-                        cakeScript = "/home/jenkins/template-run/cake/build.min.cake"
-                    }
-                    echo "Calling cake ${cakeScript}"
-                    sh "dotnet cake ${cakeScript} --nugetconfig ${HOME}/.nuget/NuGet/NuGet.Config --verbosity Verbose"
-                }
-            }
+            //dir("${projectPath}") {
+            //    script {
+            //        def cakeScript = sh(script: "yq '.config.build.cakeScript' ${KB_CODEBUILD_SRC_DIR}/${scriptPath}/pipeline.yaml", returnStdout: true).trim()
+            //        echo "BUILD_CAKE_SCRIPT config is ${cakeScript}"
+            //        if (cakeScript) {
+            //            echo "cakeScript configured"
+            //        }
+            //        else{
+            //            // use Template default, yeah I know
+            //            cakeScript = "/home/jenkins/template-run/cake/build.min.cake"
+            //        }
+            //        echo "Calling cake ${cakeScript}"
+            //        sh "dotnet cake ${cakeScript} --nugetconfig ${HOME}/.nuget/NuGet/NuGet.Config --verbosity Verbose"
+            //    }
+            //}
         }
-    }
-    stage('Test') {
-        println 'dotnet test'
     }
 }
