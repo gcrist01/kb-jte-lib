@@ -48,13 +48,13 @@ void call() {
                     echo "Calling cake ${cakeScript}"
                     sh 'whoami && id'
                     sh "echo home $HOME"
-                    echo " $HOME"
+                    echo "KB_CODEBUILD_SRC_DIR ${env.KB_CODEBUILD_SRC_DIR}"
                     //sh "export HOME=$WORKSPACE/.dotnet_home"
                     //sh "mkdir -p "$HOME""
                     sh "HOME=$WORKSPACE dotnet new tool-manifest --force"
                     sh "HOME=$WORKSPACE dotnet tool restore"
                     sh "HOME=$WORKSPACE dotnet cake --info"
-                    sh "KB_CODEBUILD_SRC_DIR="${env.WORKSPACE}" HOME=$WORKSPACE dotnet cake ${cakeScript} --nugetconfig /home/jenkins/.nuget/NuGet/NuGet.Config --verbosity Verbose"
+                    sh "KB_CODEBUILD_SRC_DIR=${env.WORKSPACE} HOME=$WORKSPACE dotnet cake ${cakeScript} --nugetconfig /home/jenkins/.nuget/NuGet/NuGet.Config --verbosity Verbose"
                 }
             }
         }
