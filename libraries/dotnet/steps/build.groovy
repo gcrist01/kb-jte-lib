@@ -22,7 +22,8 @@ void call() {
             def projectPath = config.KB_PROJECT_PATH
             echo "Use Cake Build on ${projectPath}..."
             
-            def cakeScript = sh(script: "yq '.config.build.cakeScript' ${env.WORKSPACE}/${scriptPath}/pipeline.yaml", returnStdout: true).trim()
+            def pwd = sh(script: "pwd", returnStdout: true)
+            def cakeScript = sh(script: "yq '.config.build.cakeScript' ${pwd}/${scriptPath}/pipeline.yaml", returnStdout: true).trim()
             echo "BUILD_CAKE_SCRIPT config is ${cakeScript}"
             if (cakeScript) {
                 echo "cakeScript configured"
