@@ -7,6 +7,7 @@ void call() {
         echo "config Type is: ${config.getClass().name}"
         echo "stepContext Type is: ${stepContext.getClass().name}"        
         println "args -> ${config.args}" 
+        String gradleVersion = config.version
         def scriptPath = config.KB_SCRIPT_PATH
         def projectPath = config.KB_PROJECT_PATH
 
