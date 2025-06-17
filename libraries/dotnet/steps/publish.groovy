@@ -26,9 +26,8 @@ void call() {
             stage('Build') {
                 def scriptPath = config.KB_SCRIPT_PATH
                 def projectPath = config.KB_PROJECT_PATH
-                echo "Use Cake Build on ${projectPath}..."
                 
-                sh "ls -lart ${env.WORKSPACE}/"
+                //sh "ls -lart ${env.WORKSPACE}/"
                 def cakeScript = sh(script: "yq '.config.build.cakeScript' ${env.WORKSPACE}/${scriptPath}/pipeline.yaml", returnStdout: true).trim()
                 echo "BUILD_CAKE_SCRIPT config is ${cakeScript}"
                 if (cakeScript) {
@@ -38,8 +37,11 @@ void call() {
                     // use Template default, yeah I know
                     cakeScript = "/home/jenkins/template-run/cake/build.min.cake"
                 }
-                echo "Calling cake ${cakeScript}"
-                sh "dotnet cake ${cakeScript} --nugetconfig ${HOME}/.nuget/NuGet/NuGet.Config --verbosity Verbose"
+                echo "Use Cake Build on ${projectPath}..."
+                dir("${projectPath}"){
+                    echo "Calling cake ${cakeScript}"
+                    sh "dotnet cake ${cakeScript} --nugetconfig ${HOME}/.nuget/NuGet/NuGet.Config --verbosity Verbose"
+                }
             }
         }
     }
