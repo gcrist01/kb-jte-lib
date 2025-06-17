@@ -1,7 +1,14 @@
 void call() {
     
     stage('Compile') {
-        environment {
+        node ('cake') {
+            echo "config Type is: ${config.getClass().name}"
+            stage('Checkout') {
+                checkout scm
+            }
+
+            stage('Build') {
+                environment {
           // Jenkins user hacks
           DOTNET_CLI_HOME = "${env.WORKSPACE}/.dotnet"
           DOCKER_CONFIG="/home/jenkins/.docker"
@@ -17,14 +24,6 @@ void call() {
           KB_STAGE_NAME="Build"
           HOME="/home/jenkins/"
         }
-        node ('cake') {
-
-            echo "config Type is: ${config.getClass().name}"
-            stage('Checkout') {
-                checkout scm
-            }
-
-            stage('Build') {
                 def scriptPath = config.KB_SCRIPT_PATH
                 def projectPath = config.KB_PROJECT_PATH
                 
