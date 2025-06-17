@@ -2,10 +2,23 @@ void call() {
     
     stage('Build') {
         environment {
-            // Jenkins user hacks
-            DOTNET_CLI_HOME = "${env.WORKSPACE}/.dotnet"
+          // Jenkins user hacks
+          DOTNET_CLI_HOME = "${env.WORKSPACE}/.dotnet"
+          DOCKER_CONFIG="/home/jenkins/.docker"
+          PATH = "${env.WORKSPACE}/.dotnet/tools:${env.PATH}"
+          DOTNET_CLI_TELEMETRY_OPTOUT = 1
+          // Hacks to make it work as the CICD environment would
+          PROD_ECR_HOST_NAME="250300400957.dkr.ecr.ap-southeast-2.amazonaws.com"
+          NON_PROD_ECR_HOST_NAME="041371538652.dkr.ecr.ap-southeast-2.amazonaws.com"
+          SERVICEACCOUNT_NAME="sf-thing-api"
+          STAGE_ACCOUNT_ID="041371538652"
+          STAGE_ECR_HOST_NAME="041371538652.dkr.ecr.ap-southeast-2.amazonaws.com"
+          KB_CODEBUILD_SRC_DIR="${env.WORKSPACE}"
+          KB_STAGE_NAME="Build"
         }
-        echo "config Type is: ${config.getClass().name}"
+        steps {
+            echo "config Type is: ${config.getClass().name}"
+        }
     }
 }
 
