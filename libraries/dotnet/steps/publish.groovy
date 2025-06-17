@@ -44,6 +44,8 @@ void call() {
                     echo "Calling cake ${cakeScript}"
                     sh 'whoami && id'
                     sh "echo $HOME"
+                    sh "export HOME=$WORKSPACE/.dotnet_home"
+                    sh "mkdir -p "$HOME""
                     sh "dotnet new tool-manifest --force"
                     sh "dotnet tool restore"
                     sh "dotnet cake --info"
