@@ -38,6 +38,7 @@ void call() {
                     cakeScript = "/home/jenkins/template-run/cake/build.min.cake"
                 }
                 echo "Use Cake Build on ${projectPath}..."
+                sh "cat ${cakeScript}"
                 dir("${projectPath}"){
                     echo "Calling cake ${cakeScript}"
                     sh "dotnet cake ${cakeScript} --nugetconfig ${HOME}/.nuget/NuGet/NuGet.Config --verbosity Verbose"
