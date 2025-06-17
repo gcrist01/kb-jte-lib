@@ -1,6 +1,6 @@
 void call() {
     
-    stage('Compile') {
+    stage('Compile & Package') {
         environment {
           // Jenkins user hacks
           DOTNET_CLI_HOME = "${env.WORKSPACE}/.dotnet"
@@ -9,18 +9,18 @@ void call() {
           DOTNET_CLI_TELEMETRY_OPTOUT = 1
           HOME="/home/jenkins/"
           // Hacks to make it work as the CICD environment would
-          PROD_ECR_HOST_NAME="250300400957.dkr.ecr.ap-southeast-2.amazonaws.com"
-          NON_PROD_ECR_HOST_NAME="041371538652.dkr.ecr.ap-southeast-2.amazonaws.com"
-          SERVICEACCOUNT_NAME="sf-thing-api"
-          STAGE_ACCOUNT_ID="041371538652"
-          STAGE_ECR_HOST_NAME="041371538652.dkr.ecr.ap-southeast-2.amazonaws.com"
+          //PROD_ECR_HOST_NAME="250300400957.dkr.ecr.ap-southeast-2.amazonaws.com"
+          //NON_PROD_ECR_HOST_NAME="041371538652.dkr.ecr.ap-southeast-2.amazonaws.com"
+          //SERVICEACCOUNT_NAME="sf-thing-api"
+          //STAGE_ACCOUNT_ID="041371538652"
+          //STAGE_ECR_HOST_NAME="041371538652.dkr.ecr.ap-southeast-2.amazonaws.com"
 
         }
         node ('cake') {
-            environment {
-                KB_CODEBUILD_SRC_DIR="${env.WORKSPACE}"
-                KB_STAGE_NAME="Build"
-            }
+            //environment {
+            //    KB_CODEBUILD_SRC_DIR="${env.WORKSPACE}"
+            //    KB_STAGE_NAME="Build"
+            //}
 
             echo "config Type is: ${config.getClass().name}"
             stage('Checkout') {
@@ -42,11 +42,12 @@ void call() {
                 echo "Use Cake Build on ${projectPath}..."
                 dir("${projectPath}"){
                     echo "Calling cake ${cakeScript}"
-                    sh 'whoami && id'
-                    sh "echo home $HOME"
-                    echo "KB_CODEBUILD_SRC_DIR ${env.KB_CODEBUILD_SRC_DIR}"
+                    //sh 'whoami && id'
+                    //sh "echo home $HOME"
+                    //echo "KB_CODEBUILD_SRC_DIR ${env.KB_CODEBUILD_SRC_DIR}"
 
                     def envVars = [
+                    "KB_STAGE_NAME=Build",
                     "KB_SCRIPT_PATH=${scriptPath}",
                     "KB_CODEBUILD_SRC_DIR=${env.WORKSPACE}",
                     "HOME=${env.WORKSPACE}"
@@ -57,9 +58,9 @@ void call() {
                     "STAGE_ECR_HOST_NAME=041371538652.dkr.ecr.ap-southeast-2.amazonaws.com"
                     ]
 
-                    sh "HOME=$WORKSPACE dotnet new tool-manifest --force"
-                    sh "HOME=$WORKSPACE dotnet tool restore"
-                    sh "HOME=$WORKSPACE dotnet cake --info"
+                    sh "HOME=${env.WORKSPACE} dotnet new tool-manifest --force"
+                    sh "HOME=${env.WORKSPACE} dotnet tool restore"
+                    sh "HOME=${env.WORKSPACE} dotnet cake --info"
                     withEnv(envVars) {
                         //sh "KB_SCRIPT_PATH=${scriptPath} KB_CODEBUILD_SRC_DIR=${env.WORKSPACE} HOME=$WORKSPACE dotnet cake ${cakeScript} --nugetconfig /home/jenkins/.nuget/NuGet/NuGet.Config --verbosity Verbose"
                         sh "dotnet cake ${cakeScript} --nugetconfig /home/jenkins/.nuget/NuGet/NuGet.Config --verbosity Verbose"
