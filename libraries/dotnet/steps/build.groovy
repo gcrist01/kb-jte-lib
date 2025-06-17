@@ -6,8 +6,7 @@ void call() {
         //println config.getClass().name
         echo "config Type is: ${config.getClass().name}"
         echo "stepContext Type is: ${stepContext.getClass().name}"        
-        println "args -> ${config.args}" 
-        String gradleVersion = config.version
+        println "KB_SCRIPT_PATH -> ${config.KB_SCRIPT_PATH}" 
         def scriptPath = config.KB_SCRIPT_PATH
         def projectPath = config.KB_PROJECT_PATH
 
@@ -29,7 +28,7 @@ void call() {
         }
         steps {
             echo "Use Cake Build on ${projectPath}..."
-            dir("projectPath") {
+            dir("${projectPath}") {
                 script {
                     def cakeScript = sh(script: "yq '.config.build.cakeScript' ${KB_CODEBUILD_SRC_DIR}/${scriptPath}/pipeline.yaml", returnStdout: true).trim()
                     echo "BUILD_CAKE_SCRIPT config is ${cakeScript}"
