@@ -1,6 +1,11 @@
 void call() {
+    
     stage('Build') {
-           echo "config Type is: ${config.getClass().name}"
+        environment {
+            // Jenkins user hacks
+            DOTNET_CLI_HOME = "${env.WORKSPACE}/.dotnet"
+        }
+        echo "config Type is: ${config.getClass().name}"
     }
 }
 
