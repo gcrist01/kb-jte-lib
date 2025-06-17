@@ -39,7 +39,7 @@ void call() {
                 }
                 echo "Use Cake Build on ${projectPath}..."
                 sh "cat ${cakeScript}"
-                sh "cat ${HOME}/.nuget/NuGet/NuGet.Config"
+                sh "cat /home/jenkins/.nuget/NuGet/NuGet.Config"
                 dir("${projectPath}"){
                     echo "Calling cake ${cakeScript}"
                     sh "dotnet new tool-manifest --force"
