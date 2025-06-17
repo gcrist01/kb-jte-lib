@@ -50,7 +50,7 @@ void call() {
                     sh "HOME=$WORKSPACE dotnet new tool-manifest --force"
                     sh "HOME=$WORKSPACE dotnet tool restore"
                     sh "HOME=$WORKSPACE dotnet cake --info"
-                    sh "HOME=$WORKSPACE dotnet cake ${cakeScript} --bootstrap --nugetconfig /home/jenkins/.nuget/NuGet/NuGet.Config --verbosity Verbose"
+                    sh "HOME=$WORKSPACE dotnet cake ${cakeScript} --nugetconfig /home/jenkins/.nuget/NuGet/NuGet.Config --verbosity Verbose"
                 }
             }
         }
