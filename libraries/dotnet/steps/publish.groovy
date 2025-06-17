@@ -38,10 +38,11 @@ void call() {
                     cakeScript = "/home/jenkins/template-run/cake/build.min.cake"
                 }
                 echo "Use Cake Build on ${projectPath}..."
-                sh "cat ${cakeScript}"
-                sh "cat /home/jenkins/.nuget/NuGet/NuGet.Config"
+                //sh "cat ${cakeScript}"
+                //sh "cat /home/jenkins/.nuget/NuGet/NuGet.Config"
                 dir("${projectPath}"){
                     echo "Calling cake ${cakeScript}"
+                    sh 'whoami && id'
                     sh "dotnet new tool-manifest --force"
                     sh "dotnet tool restore"
                     sh "dotnet cake --info"
