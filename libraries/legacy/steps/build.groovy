@@ -1,8 +1,8 @@
 void call() {
     stage('Build') {
-        println 'dotnet build'
+        println 'legacy build'
     }
     stage('Test') {
-        println 'dotnet test'
+        println 'legacy test'
     }
 }

@@ -1,5 +1,5 @@
 void call() {
     stage('Accept') {
-        println 'Accept'
+        println 'CIP deploy to Accept'
     }
 }
