@@ -50,11 +50,11 @@ void call() {
                     "KB_STAGE_NAME=Build",
                     "KB_SCRIPT_PATH=${scriptPath}",
                     "KB_CODEBUILD_SRC_DIR=${env.WORKSPACE}",
-                    "HOME=${env.WORKSPACE}"
-                    "PROD_ECR_HOST_NAME=250300400957.dkr.ecr.ap-southeast-2.amazonaws.com"
-                    "NON_PROD_ECR_HOST_NAME=041371538652.dkr.ecr.ap-southeast-2.amazonaws.com"
-                    "SERVICEACCOUNT_NAME=sf-thing-api"
-                    "STAGE_ACCOUNT_ID=041371538652"
+                    "HOME=${env.WORKSPACE}",
+                    "PROD_ECR_HOST_NAME=250300400957.dkr.ecr.ap-southeast-2.amazonaws.com",
+                    "NON_PROD_ECR_HOST_NAME=041371538652.dkr.ecr.ap-southeast-2.amazonaws.com",
+                    "SERVICEACCOUNT_NAME=sf-thing-api",
+                    "STAGE_ACCOUNT_ID=041371538652",
                     "STAGE_ECR_HOST_NAME=041371538652.dkr.ecr.ap-southeast-2.amazonaws.com"
                     ]
 
