@@ -7,17 +7,20 @@ void call() {
           DOCKER_CONFIG="/home/jenkins/.docker"
           PATH = "${env.WORKSPACE}/.dotnet/tools:${env.PATH}"
           DOTNET_CLI_TELEMETRY_OPTOUT = 1
+          HOME="/home/jenkins/"
           // Hacks to make it work as the CICD environment would
           PROD_ECR_HOST_NAME="250300400957.dkr.ecr.ap-southeast-2.amazonaws.com"
           NON_PROD_ECR_HOST_NAME="041371538652.dkr.ecr.ap-southeast-2.amazonaws.com"
           SERVICEACCOUNT_NAME="sf-thing-api"
           STAGE_ACCOUNT_ID="041371538652"
           STAGE_ECR_HOST_NAME="041371538652.dkr.ecr.ap-southeast-2.amazonaws.com"
-          KB_CODEBUILD_SRC_DIR="${env.WORKSPACE}"
-          KB_STAGE_NAME="Build"
-          HOME="/home/jenkins/"
+
         }
         node ('cake') {
+            environment {
+                KB_CODEBUILD_SRC_DIR="${env.WORKSPACE}"
+                KB_STAGE_NAME="Build"
+            }
 
             echo "config Type is: ${config.getClass().name}"
             stage('Checkout') {
@@ -44,7 +47,8 @@ void call() {
                 dir("${projectPath}"){
                     echo "Calling cake ${cakeScript}"
                     sh 'whoami && id'
-                    sh "echo $HOME"
+                    sh "echo home $HOME"
+                    echo " $HOME"
                     //sh "export HOME=$WORKSPACE/.dotnet_home"
                     //sh "mkdir -p "$HOME""
                     sh "HOME=$WORKSPACE dotnet new tool-manifest --force"
