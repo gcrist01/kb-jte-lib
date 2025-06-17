@@ -1,14 +1,7 @@
 void call() {
     
     stage('Compile') {
-        node ('cake') {
-            echo "config Type is: ${config.getClass().name}"
-            stage('Checkout') {
-                checkout scm
-            }
-
-            stage('Build') {
-                environment {
+        environment {
           // Jenkins user hacks
           DOTNET_CLI_HOME = "${env.WORKSPACE}/.dotnet"
           DOCKER_CONFIG="/home/jenkins/.docker"
@@ -24,6 +17,14 @@ void call() {
           KB_STAGE_NAME="Build"
           HOME="/home/jenkins/"
         }
+        node ('cake') {
+
+            echo "config Type is: ${config.getClass().name}"
+            stage('Checkout') {
+                checkout scm
+            }
+
+            stage('Build') {
                 def scriptPath = config.KB_SCRIPT_PATH
                 def projectPath = config.KB_PROJECT_PATH
                 
@@ -49,7 +50,7 @@ void call() {
                     sh "HOME=$WORKSPACE dotnet new tool-manifest --force"
                     sh "HOME=$WORKSPACE dotnet tool restore"
                     sh "HOME=$WORKSPACE dotnet cake --info"
-                    sh "HOME=$WORKSPACE dotnet cake ${cakeScript} --nugetconfig /home/jenkins/.nuget/NuGet/NuGet.Config --verbosity Verbose"
+                    sh "KB_CODEBUILD_SRC_DIR="${env.WORKSPACE}" HOME=$WORKSPACE dotnet cake ${cakeScript} --nugetconfig /home/jenkins/.nuget/NuGet/NuGet.Config --verbosity Verbose"
                 }
             }
         }
