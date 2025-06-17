@@ -43,6 +43,7 @@ void call() {
                 dir("${projectPath}"){
                     echo "Calling cake ${cakeScript}"
                     sh 'whoami && id'
+                    sh "echo $HOME"
                     sh "dotnet new tool-manifest --force"
                     sh "dotnet tool restore"
                     sh "dotnet cake --info"
