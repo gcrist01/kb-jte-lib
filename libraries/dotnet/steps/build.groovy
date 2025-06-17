@@ -1,4 +1,4 @@
-void call() {
+void call(context) {
     agent {
         label 'cake'
     }
