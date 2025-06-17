@@ -16,7 +16,9 @@ void call() {
           KB_CODEBUILD_SRC_DIR="${env.WORKSPACE}"
           KB_STAGE_NAME="Build"
         }
-        steps {
+        
+        echo "config Type is: ${config.getClass().name}"
+        dir("MinimalWebApp2") {
             echo "config Type is: ${config.getClass().name}"
         }
     }
