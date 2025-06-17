@@ -39,9 +39,13 @@ void call() {
                 }
                 echo "Use Cake Build on ${projectPath}..."
                 sh "cat ${cakeScript}"
+                sh "cat ${HOME}/.nuget/NuGet/NuGet.Config"
                 dir("${projectPath}"){
                     echo "Calling cake ${cakeScript}"
-                    sh "dotnet cake ${cakeScript} --nugetconfig ${HOME}/.nuget/NuGet/NuGet.Config --verbosity Verbose"
+                    sh "dotnet new tool-manifest --force"
+                    sh "dotnet tool restore"
+                    sh "dotnet cake --info"
+                    sh "dotnet cake ${cakeScript} --bootstrap --nugetconfig ${HOME}/.nuget/NuGet/NuGet.Config --verbosity Verbose"
                 }
             }
         }
