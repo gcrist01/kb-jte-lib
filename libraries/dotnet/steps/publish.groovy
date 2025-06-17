@@ -45,7 +45,7 @@ void call() {
                     sh "dotnet new tool-manifest --force"
                     sh "dotnet tool restore"
                     sh "dotnet cake --info"
-                    sh "dotnet cake ${cakeScript} --bootstrap --nugetconfig ${HOME}/.nuget/NuGet/NuGet.Config --verbosity Verbose"
+                    sh "dotnet cake ${cakeScript} --bootstrap --nugetconfig /home/jenkins/.nuget/NuGet/NuGet.Config --verbosity Verbose"
                 }
             }
         }
