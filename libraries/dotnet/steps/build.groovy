@@ -1,8 +1,9 @@
-void call(Map config) {
+void call(config) {
     agent {
         label 'cake'
     }
     stage('Build') {
+        println config.getClass().name
         def scriptPath = config.KB_SCRIPT_PATH
         def projectPath = config.KB_PROJECT_PATH
 
