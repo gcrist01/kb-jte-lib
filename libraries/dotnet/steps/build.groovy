@@ -22,21 +22,21 @@ void call() {
             def scriptPath = config.KB_SCRIPT_PATH
             def projectPath = config.KB_PROJECT_PATH
 
-            dir("${projectPath}") {
-                echo "Use Cake Build on ${projectPath}..."
-                
-                def cakeScript = sh(script: "yq '.config.build.cakeScript' ${KB_CODEBUILD_SRC_DIR}/${scriptPath}/pipeline.yaml", returnStdout: true).trim()
-                echo "BUILD_CAKE_SCRIPT config is ${cakeScript}"
-                if (cakeScript) {
-                    echo "cakeScript configured"
-                }
-                else{
-                    // use Template default, yeah I know
-                    cakeScript = "/home/jenkins/template-run/cake/build.min.cake"
-                }
-                echo "Calling cake ${cakeScript}"
-                sh "dotnet cake ${cakeScript} --nugetconfig ${HOME}/.nuget/NuGet/NuGet.Config --verbosity Verbose"
+            //dir("${projectPath}") {
+            echo "Use Cake Build on ${projectPath}..."
+            
+            def cakeScript = sh(script: "yq '.config.build.cakeScript' ${KB_CODEBUILD_SRC_DIR}/${scriptPath}/pipeline.yaml", returnStdout: true).trim()
+            echo "BUILD_CAKE_SCRIPT config is ${cakeScript}"
+            if (cakeScript) {
+                echo "cakeScript configured"
             }
+            else{
+                // use Template default, yeah I know
+                cakeScript = "/home/jenkins/template-run/cake/build.min.cake"
+            }
+            echo "Calling cake ${cakeScript}"
+            sh "dotnet cake ${cakeScript} --nugetconfig ${HOME}/.nuget/NuGet/NuGet.Config --verbosity Verbose"
+            //}
         }
     }
 }
