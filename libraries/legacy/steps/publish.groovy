@@ -1,6 +1,6 @@
 void call() {
-    stage('Build') {
-        println 'legacy build'
+    stage('Compile') {
+        println 'legacy compile'
     }
     stage('Test') {
         println 'legacy test'
