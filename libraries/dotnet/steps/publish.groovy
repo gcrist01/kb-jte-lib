@@ -15,6 +15,7 @@ void call() {
           STAGE_ECR_HOST_NAME="041371538652.dkr.ecr.ap-southeast-2.amazonaws.com"
           KB_CODEBUILD_SRC_DIR="${env.WORKSPACE}"
           KB_STAGE_NAME="Build"
+          HOME="/home/jenkins/"
         }
         node ('cake') {
 
@@ -44,12 +45,12 @@ void call() {
                     echo "Calling cake ${cakeScript}"
                     sh 'whoami && id'
                     sh "echo $HOME"
-                    sh "export HOME=$WORKSPACE/.dotnet_home"
-                    sh "mkdir -p "$HOME""
-                    sh "dotnet new tool-manifest --force"
-                    sh "dotnet tool restore"
-                    sh "dotnet cake --info"
-                    sh "dotnet cake ${cakeScript} --bootstrap --nugetconfig /home/jenkins/.nuget/NuGet/NuGet.Config --verbosity Verbose"
+                    //sh "export HOME=$WORKSPACE/.dotnet_home"
+                    //sh "mkdir -p "$HOME""
+                    sh "HOME=$WORKSPACE dotnet new tool-manifest --force"
+                    sh "HOME=$WORKSPACE dotnet tool restore"
+                    sh "HOME=$WORKSPACE dotnet cake --info"
+                    sh "HOME=$WORKSPACE dotnet cake ${cakeScript} --bootstrap --nugetconfig /home/jenkins/.nuget/NuGet/NuGet.Config --verbosity Verbose"
                 }
             }
         }
